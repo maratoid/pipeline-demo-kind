@@ -20,10 +20,8 @@ kind create cluster --loglevel debug --name test --wait 600s
 export KUBECONFIG="$(kind get kubeconfig-path --name="test")"
 
 echo "INITIALIZING HELM"
-kubectl create serviceaccount --namespace kube-system tiller
-kubectl create clusterrolebinding tiller-cluster-rule --clusterrole=cluster-admin --serviceaccount=kube-system:tiller
-kubectl patch deploy --namespace kube-system tiller-deploy -p '{"spec":{"template":{"spec":{"serviceAccount":"tiller"}}}}'
-helm init --service-account tiller --wait
+kubectl create clusterrolebinding add-on-cluster-admin --clusterrole=cluster-admin --serviceaccount=kube-system:default
+helm init --wait
 helm repo add cnct https://charts.migrations.cnct.io
 helm repo update
 
