@@ -20,13 +20,18 @@ kind create cluster --loglevel debug --name test --wait 600s
 export KUBECONFIG="$(kind get kubeconfig-path --name="test")"
 
 echo "INITIALIZING HELM"
-helm init --wait
+kubectl create serviceaccount --namespace kube-system tiller
+kubectl create clusterrolebinding tiller-cluster-rule --clusterrole=cluster-admin --serviceaccount=kube-system:tiller
+kubectl patch deploy --namespace kube-system tiller-deploy -p '{"spec":{"template":{"spec":{"serviceAccount":"tiller"}}}}'
+helm init --service-account tiller --wait
 helm repo add cnct https://charts.migrations.cnct.io
 helm repo update
 
 echo "DEPLOY WITH HELM"
-helm install cnct/cma-operator --name cma --wait
+helm install cnct/jenkins-operator --name jenkins-operator --wait
 
 echo "DELETE DEPLOYMENT"
 helm delete cma --purge
 
+echo "DELETE CLUSTER"
+kind delete cluster --name test
