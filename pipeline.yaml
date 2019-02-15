@@ -1,0 +1,20 @@
+type: char
+envValues:
+  - envVar: SECRET_TOKEN_FROM_VAULT
+    secret: jobs/demo/demovalue
+  - envVar: NON_SECRET_VARIABLE
+    value: SOMETHING-SET-FROM-PIPELINE-YAML
+builds:
+  - image: bash:latest
+    script: scripts/generatefile.sh
+    shell: /bin/bash
+stage:
+  afterScript:
+    image: quay.io/samsung_cnct/kind:maratoid
+    shell: /bin/sh
+    script: scripts/stage-kind-cluster.sh        
+prod: 
+  afterScript:
+    image: alpine:latest
+    script: scripts/prod-deploy.sh 
+  doDeploy: auto
