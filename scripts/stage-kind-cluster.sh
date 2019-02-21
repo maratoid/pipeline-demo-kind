@@ -29,7 +29,7 @@ echo "DEPLOY WITH HELM"
 helm install cnct/jenkins-operator --name jenkins-operator --wait
 
 echo "DELETE DEPLOYMENT"
-helm delete cma --purge
+helm delete jenkins-operator --purge
 
 echo "DELETE CLUSTER"
 kind delete cluster --name test

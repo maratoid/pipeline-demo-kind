@@ -11,7 +11,7 @@ builds:
 stage:
   afterScript:
     image: quay.io/samsung_cnct/kind:maratoid
-    shell: /bin/sh
+    shell: /bin/bash
     script: scripts/stage-kind-cluster.sh        
 prod: 
   afterScript:
