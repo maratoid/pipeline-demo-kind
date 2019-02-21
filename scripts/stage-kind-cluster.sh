@@ -22,7 +22,7 @@ export KUBECONFIG="$(kind get kubeconfig-path --name="test")"
 echo "INITIALIZING HELM"
 kubectl create clusterrolebinding add-on-cluster-admin --clusterrole=cluster-admin --serviceaccount=kube-system:default
 helm init --wait
-helm repo add cnct https://charts.migrations.cnct.io
+helm repo add cnct https://charts.cnct.io
 helm repo update
 
 echo "DEPLOY WITH HELM"
