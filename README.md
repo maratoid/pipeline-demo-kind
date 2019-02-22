@@ -1,5 +1,5 @@
 # pipeline-demo-kind
-Using a kind cluster with pipeline-library
+Using a kind cluster with pipeline-library.
 
 Opening a PR to this repo will result in a Jenkins job starting that will:
 
