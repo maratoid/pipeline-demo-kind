@@ -8,7 +8,11 @@ builds:
   - image: bash:latest
     script: scripts/generatefile.sh
     shell: /bin/bash
-stage:
+test:
+  afterScript:
+    image: alpine:latest
+    script: scripts/user-script.sh 
+stage: 
   afterScript:
     image: quay.io/samsung_cnct/kind:maratoid
     shell: /bin/bash
@@ -16,5 +20,5 @@ stage:
 prod: 
   afterScript:
     image: alpine:latest
-    script: scripts/prod-deploy.sh 
+    script: scripts/user-script.sh 
   doDeploy: auto
